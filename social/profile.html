@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- bootstrap import Css -->
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
+    <script src="/assets/js/bootstrap.bundle.min.js"></script>
+    <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
+    <!-- Axios -->
+    <script src="/node_modules/axios/dist/axios.min.js"></script>
+    <!-- Home import -->
+    <link rel="stylesheet" href="/assets/css/normalize.css" />
+    <link rel="stylesheet" href="/assets/css/main.css" />
+    <link rel="stylesheet" href="/assets/css/home.css" />
+    <link rel="stylesheet" href="/assets/css/profile.css" />
+    <title>Social</title>
+  </head>
+  <body>
+    <!-- Loader Page -->
+    <div id="loader">
+      <div class="loader"></div>
+    </div>
+
+    <!-- Start Modal Login BootStrap  -->
+
+    <div
+      class="modal fade"
+      id="loginModal"
+      tabindex="-1"
+      aria-labelledby="loginModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5 text-capitalize" id="loginModalLabel">
+              signin
+            </h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="mb-3">
+                <label for="userNameValue" class="col-form-label"
+                  >Username:</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="userNameValue"
+                  autocomplete="email"
+                  autocomplete="username"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="passwordValue" class="col-form-label"
+                  >Password:</label
+                >
+                <input
+                  type="password"
+                  class="form-control"
+                  id="passwordValue"
+                  autocomplete="current-password"
+                />
+              </div>
+            </form>
+            <div id="undefinedUser" class="my-2 d-none">
+              <div class="alert alert-danger alert-dismissible" role="alert">
+                <div>Incorrect email or password</div>
+              </div>
+            </div>
+            <b class="mx-auto d-flex justify-content-center">or</b>
+            <button
+              type="button"
+              data-bs-toggle="modal"
+              data-bs-target="#signUpModal"
+              data-bs-whatever="@mdo"
+              class="btn btn-secondary btn-sm mx-auto d-flex justify-content-center my-2"
+            >
+              Signup
+            </button>
+          </div>
+          <div class="modal-footer">
+            <button
+              class="btn btn-primary"
+              type="button"
+              id="loginButtonAlert"
+              onclick="loginToken()"
+            >
+              Signin
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- End Modal Login BootStrap  -->
+
+    <!-- Start Modal SignUp BootStrap  -->
+
+    <div
+      class="modal fade"
+      id="signUpModal"
+      tabindex="-1"
+      aria-labelledby="signUpModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5 text-capitalize" id="signUpModalLabel">
+              signup
+            </h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <label for="emailSignUp" class="col-form-label d-block"
+                >Email:</label
+              >
+              <div class="input-group mb-3">
+                <span class="input-group-text">
+                  <label for="emailSignUp" class="col-form-label"
+                    >@</label
+                  ></span
+                >
+                <input
+                  type="email"
+                  class="form-control"
+                  placeholder="Email"
+                  aria-label="Username"
+                  id="emailSignUp"
+                  autocomplete="email"
+                  autocomplete="username"
+                />
+              </div>
+              <div id="emailSignupError" class="my-2 d-none">
+                <div
+                  class="alert alert-danger alert-dismissible"
+                  role="alert"
+                  id="emailSignErrorMessage"
+                >
+                  <div>Incorrect email or password</div>
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="nameSignUp" class="col-form-label text-capitalize"
+                  >name</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="nameSignUp"
+                  autocomplete="username"
+                  placeholder="Name"
+                />
+              </div>
+              <div id="nameSignupError" class="my-2 d-none">
+                <div
+                  class="alert alert-danger alert-dismissible"
+                  role="alert"
+                  id="nameSignErrorMessage"
+                >
+                  <div>Incorrect email or password</div>
+                </div>
+              </div>
+              <div class="mb-3">
+                <label
+                  for="usernameSignUp"
+                  class="col-form-label text-capitalize"
+                  >username</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="usernameSignUp"
+                  autocomplete="username"
+                  placeholder="Username"
+                />
+              </div>
+              <div id="usernameSignupError" class="my-2 d-none">
+                <div
+                  class="alert alert-danger alert-dismissible"
+                  role="alert"
+                  id="usernameSignErrorMessage"
+                >
+                  <div>Incorrect email or password</div>
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="passwordSignUp" class="col-form-label"
+                  >Password:</label
+                >
+                <input
+                  type="password"
+                  class="form-control"
+                  id="passwordSignUp"
+                  autocomplete="current-password"
+                />
+              </div>
+              <div id="passwordSignupError" class="my-2 d-none">
+                <div
+                  class="alert alert-danger alert-dismissible"
+                  role="alert"
+                  id="passwordSignErrorMessage"
+                >
+                  <div>Incorrect email or password</div>
+                </div>
+              </div>
+              <!-- Image Of Post -->
+              <div class="mb-3">
+                <label for="signPhoto" class="col-form-label text-capitalize"
+                  >profile image</label
+                >
+                <input
+                  id="signPhoto"
+                  type="file"
+                  class="form-control"
+                  aria-describedby="basic-addon2"
+                />
+              </div>
+              <!-- Show Error Image -->
+              <div id="signPhotoError" class="my-2 d-none">
+                <div
+                  class="alert alert-danger alert-dismissible"
+                  role="alert"
+                  id="signPhotoErrorMessage"
+                >
+                  <div>Incorrect email or password</div>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              onclick="signNewUser()"
+              id="signUpButtonAlert"
+            >
+              Signup
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- End Modal singnUp BootStrap  -->
+
+    <!-- Start Modal Add Post  -->
+
+    <div
+      class="modal fade"
+      id="addPostmodal"
+      tabindex="-1"
+      aria-labelledby="addPostmodalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog mb-3">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5 text-capitalize" id="addPostmodalLabel">
+              add post
+            </h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <!-- Title Of Post -->
+              <div class="mb-3">
+                <label
+                  for="titlePost"
+                  class="col-form-label d-block text-capitalize"
+                  >title:</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Title Of Post"
+                  aria-label="Username"
+                  id="titlePost"
+                />
+              </div>
+
+              <!-- Body Of Post -->
+              <div class="mb-3">
+                <label
+                  for="postContentBody"
+                  class="col-form-label text-capitalize"
+                  >post content</label
+                >
+                <textarea
+                  type="text"
+                  class="form-control"
+                  id="postContentBody"
+                  placeholder="Write A Post"
+                  required
+                ></textarea>
+              </div>
+              <div id="postErrorPost" class="my-2 d-none">
+                <div
+                  class="alert alert-danger alert-dismissible"
+                  role="alert"
+                  id="postErrorPostMessage"
+                >
+                  <div>Incorrect email or password</div>
+                </div>
+              </div>
+              <!-- Image Of Post -->
+              <div class="mb-3">
+                <label for="postPhoto" class="col-form-label text-capitalize"
+                  >Add Photo To Post</label
+                >
+                <input
+                  id="postPhoto"
+                  type="file"
+                  class="form-control"
+                  aria-describedby="basic-addon2"
+                />
+              </div>
+              <!-- Show Error Image -->
+              <div id="postErrorImage" class="my-2 d-none">
+                <div
+                  class="alert alert-danger alert-dismissible"
+                  role="alert"
+                  id="postErrorImageMessage"
+                >
+                  <div>Incorrect email or password</div>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-primary text-capitalize"
+              id="creatPostButtonProfile"
+              onclick="creatPostProfile()"
+            >
+              creat
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- End Modal Add Post  -->
+
+    <!-- Start Modal Add Comment  -->
+
+    <div
+      class="modal fade"
+      id="creatComment"
+      tabindex="-1"
+      aria-labelledby="creatCommentLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5 text-capitalize" id="creatCommentLabel">
+              add comment
+            </h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <!-- Title Of Post -->
+              <div class="mb-3">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Write A Comment "
+                  aria-label="Username"
+                  id="creatNewComment"
+                />
+              </div>
+              <!-- Show Comment Error -->
+              <div id="commentError" class="my-2 d-none">
+                <div
+                  class="alert alert-danger alert-dismissible"
+                  role="alert"
+                  id="commentErrorMessage"
+                >
+                  <div>Incorrect email or password</div>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-primary text-capitalize"
+              id="AddNewComment"
+              onclick="creatNewCommentPost()"
+            >
+              creat
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- End Modal Add Comment  -->
+
+    <!-- Start Modal Edit Post  -->
+
+    <div
+      class="modal fade"
+      id="edituserPost"
+      tabindex="-1"
+      aria-labelledby="edituserPostLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5 text-capitalize" id="edituserPostLabel">
+              Edit Post
+            </h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <!-- Title Of Post -->
+              <div class="mb-3">
+                <textarea
+                  type="text"
+                  class="form-control"
+                  placeholder="Write Your Edit"
+                  aria-label="Username"
+                  id="editPostValue"
+                >
+                </textarea>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-primary text-capitalize"
+              id="newEdit"
+              onclick="editUserPost()"
+            >
+              Edit
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- End Modal Edit Post  -->
+
+    <!-- Start Delete Edit Post  -->
+
+    <div
+      class="modal fade"
+      id="deletedPost"
+      tabindex="-1"
+      aria-labelledby="deletedPostLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5 text-capitalize" id="deletedPostLabel">
+              delet post
+            </h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <!-- Title Of Post -->
+              <div class="mb-3">
+                <b class="text-capitalize">are you sure to delete post ?</b>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-danger text-capitalize"
+              id="d
+              yesDelete"
+              onclick="deletePost()"
+            >
+              Yes
+            </button>
+
+            <button
+              type="button"
+              class="btn btn-success text-capitalize"
+              id="noDelete"
+              onclick="closeDelete()"
+            >
+              no
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- End Delete Edit Post  -->
+
+    <!-- Start nav Container -->
+
+    <div class="container col-lg-9 mx-auto mb-5 navContainer">
+      <nav class="navbar navbar-expand-lg bg-body-tertiary shadow pt-3">
+        <div class="container-fluid">
+          <a
+            class="navbar-brand text-capitalize pe-auto pointer"
+            href="/home.html"
+            >abdelhamed</a
+          >
+          <button
+            class="navbar-toggler"
+            id="navMenu"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#bar"
+            aria-controls="bar"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="bar">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a
+                  class="nav-link text-capitalize"
+                  aria-current="page"
+                  href="home.html"
+                  >Home</a
+                >
+              </li>
+              <hr class="d-block d-lg-none my-1" />
+              <li class="nav-item">
+                <a
+                  class="nav-link text-capitalize active pointer"
+                  id="profile"
+                  onclick="window.location.reload()"
+                  >profile</a
+                >
+              </li>
+            </ul>
+            <form class="d-lg-flex align-items-lg-center" role="search">
+              <div id="date" class="mb-3 mb-lg-0 d-none">
+                <img
+                  src="/assets/images/profile image/team-03.png"
+                  alt=""
+                  class="myPersonImage ratio ratio-1x1"
+                  id="myPersonImageProfile"
+                />
+                <b class="text-capitalize fs-6" id="myPersonName">mido</b>
+              </div>
+              <div
+                id="logoutButton"
+                class="d-none w-fit"
+                onclick="appearLogin()"
+              >
+                <span
+                  class="btn btn-outline-danger text-capitalize mx-lg-1 mx-sm-0"
+                  onclick="deleteUserQuery()"
+                >
+                  logout
+                </span>
+              </div>
+              <div id="loginButtons">
+                <button
+                  type="button"
+                  data-bs-target="#loginModal"
+                  data-bs-toggle="modal"
+                  class="btn btn-outline-success text-capitalize mx-lg-3"
+                >
+                  login
+                </button>
+
+                <!-- Sign Up Modal -->
+                <button
+                  type="button"
+                  data-bs-toggle="modal"
+                  data-bs-target="#signUpModal"
+                  data-bs-whatever="@mdo"
+                  class="btn btn-outline-success text-capitalize"
+                >
+                  signup
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </nav>
+    </div>
+
+    <!-- End nav Container -->
+
+    <!-- -------- Start Profile Page --------- -->
+
+    <div class="container col-lg-9 mx-auto mb-5" id="profileDate"></div>
+
+    <!-- -------- End Profile Page --------- -->
+
+    <!-- Start Posts Container -->
+
+    <div class="container col-lg-9 mx-auto mb-5" id="allPostProfile"></div>
+
+    <!-- End Posts Container -->
+
+    <!-- Add Post -->
+    <div
+      id="addPost"
+      class="w-fit position-fixed addPostsProfilePageButton"
+      data-bs-target="#addPostmodal"
+      data-bs-toggle="modal"
+    ></div>
+
+    <!-- Button up  -->
+    <button
+      type="button"
+      class="btn btn-dark position-fixed d-flex justify-content-center align-items-center d-none"
+      id="upButton"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="16"
+        height="20"
+        fill="currentColor"
+        class="bi bi-arrow-up-circle"
+        viewBox="0 0 16 16"
+      >
+        <path
+          fill-rule="evenodd"
+          d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8m15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-7.5 3.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707z"
+        ></path>
+      </svg>
+    </button>
+    <!-- Home -->
+    <script src="/assets/js/main.js"></script>
+    <script src="/assets/js/profile.js"></script>
+  </body>
+</html>
+
+<!-- data-bs-dismiss="modal" -->

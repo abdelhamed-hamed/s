@@ -1,0 +1,13 @@
+@media(max-width:767px) {
+    #containerOfUserImageProfile {
+        width: fit-content;
+
+        & #profileUserImage {
+            max-height: 200px;
+        }
+    }
+
+    #dataOfUser {
+        width: fit-content;
+    }
+}

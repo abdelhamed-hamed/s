@@ -1,0 +1,56 @@
+.myPersonImageProfile,
+#myPersonImageProfile {
+    width: 30px;
+    aspect-ratio: 1/1 !important;
+}
+
+#myPersonName {
+    font-size: 12px !important;
+}
+
+#navMenu:focus {
+    box-shadow: none;
+}
+
+#addPost {
+    right: 15px;
+    bottom: 11px;
+}
+
+@media(max-width:768px) {
+    #svgAddPost {
+        width: 20px;
+        height: 20px;
+    }
+}
+
+.timePost {
+    color: rgb(122 112 112);
+    font-size: 13px;
+}
+
+#postImgCanv {
+    max-height: 500px !important;
+}
+
+.card-img {
+    max-height: 400px !important;
+}
+
+#policy {
+    font-size: 10px !important;
+    width: fit-content;
+}
+
+#postContentBody,
+#editPostValue {
+    resize: none;
+}
+
+img {
+    aspect-ratio: 1/1 !important;
+}
+
+#editPostValue {
+    height: 150px;
+}
